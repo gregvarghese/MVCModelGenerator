@@ -27,13 +27,19 @@ In Progress
 ----------
  Some features are a work in progress and not finalized. I'll update this readme file as features are updated or modified. Things currently in progress which should be updated shortly:
  - User Interface to be improved as features are added.
- - Dapper CRUD functionality generation is still being developed. Basic code is in the class but it is not finalized and thus not called by the app yet.
- - 
+ - Dapper CRUD functionality generation is still being developed. Basic code is now available through generated business layer.
 
 ----------
 
 Release Notes
 -------------
+5-10-2015
+
+ 1. Added basic dynamic parsing of the table (including determining
+    primary key)
+ 2. CRUD generation through business layer.
+ 3. Split out generated code to tabs.
+
 5-3-2015
 
  1. Initial Commit.  
@@ -54,6 +60,3 @@ In no particular order:
  - Generate Web API code
  - Add Support for stored procedures
  - Allow generation of multiple models simultaneously
-
-
-
