@@ -1,8 +1,10 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -16,7 +18,7 @@ namespace MVC_Model_Generator
         public Database(string connectionString)
         {
             ConnectionString = connectionString;
-             _dl = new DataLayer(ConnectionString);
+            _dl = new DataLayer(ConnectionString);
         }
 
         public static string ConnectionString { get; set; }
@@ -26,25 +28,29 @@ namespace MVC_Model_Generator
             return _dl.GetTables();
         }
 
-        public DataTable GetFields(string Tablename)
+        public DataTable GetFields(string tablename)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var sSQL = @"select * from INFORMATION_SCHEMA.COLUMNS where TABLE_Name='" + Tablename +
-                           "' order by ORDINAL_POSITION";
+                var sSQL = string.Format(@"select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_Name='{0}' order by ORDINAL_POSITION", tablename);
                 return _dl.GetDataTable(sSQL);
             }
         }
 
-        public DataTable GetSqlTypesByTable(string Tablename)
+        public DataTable GetSqlTypesByTable(string tablename)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var sSQL = @"select * from " + Tablename;
+                var sSQL = string.Format(@"select * from {0}", tablename);
                 return _dl.GetSchemaDataTable(sSQL);
             }
+        }
+
+        public string GetPrimaryKey(string tableName)
+        {
+            return _dl.GetPrimaryKey(tableName);
         }
     }
 }

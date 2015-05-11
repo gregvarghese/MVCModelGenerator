@@ -86,32 +86,31 @@ namespace MVC_Model_Generator
         /// <param name="sTableName">Name of the table.</param>
         /// <param name="sIdFieldType">DataType of the identifier field in database.</param>
         /// <returns></returns>
-        public string GenerateCRUD(string sTableNameSingular, string sTableNamePlural, string sTableName, string sIdFieldType, string[] databasefields)
+        public string GenerateCRUD(string sTableNameSingular, string sTableNamePlural, string sTableName, string sIDField, string sIdFieldType, string[] databasefields)
         {
             var sb = new System.Text.StringBuilder();
             //TODO: Finish making this dynamic.
-            sb.AppendLine(@"public class UserRepository : IUserRepository");
+            sb.AppendLine(string.Format(@"public class {0}Repository : I{0}Repository",sTableNameSingular));
             sb.AppendLine(@"    {");
             sb.AppendLine(@"        private IDbConnection _db = new SqlConnection(ConfigurationManager.ConnectionStrings[""DefaultConnection""].ConnectionString);");
             sb.AppendLine(@"        public List<User> GetAll()");
             sb.AppendLine(@"        {");
-            sb.AppendLine(@"            return this._db.Query<User>(""SELECT * FROM " + sTableName + ").ToList();");
+            sb.AppendLine(string.Format(@"            return this._db.Query<{0}>(""SELECT * FROM " + sTableName + ").ToList();",sTableNameSingular));
             sb.AppendLine(@"        }");
             sb.AppendLine(@"");
             sb.AppendLine(@"        public User Find(" + sIdFieldType + "id)");
             sb.AppendLine(@"        {");
-            sb.AppendLine(@"            return this._db.Query<User>(""SELECT * FROM " + sTableName + " WHERE UserID = @UserID"", new { id }).SingleOrDefault();");
+            sb.AppendLine(string.Format(@"            return this._db.Query<{0}>(""SELECT * FROM {1} WHERE {2} = @{2}, new {{ id }}).SingleOrDefault();", sTableNameSingular, sTableName,sIDField));
             sb.AppendLine(@"        }");
             sb.AppendLine(@"");
             sb.AppendLine(@"        public User Add(User user)");
             sb.AppendLine(@"        {");
 
             string sValues = databasefields.Select(x => "@" + x + ",").ToString();
+            var sFields = string.Join(",", databasefields);
+            sb.AppendLine(string.Format(@"var sqlQuery = ""INSERT INTO {0} ({1}) VALUES({2}); "" + ""SELECT CAST(SCOPE_IDENTITY() as {3})"";",sTableName,sFields,sValues,sIdFieldType));
 
-            var sqlQuery = "INSERT INTO " + sTableName + " (" + string.Join(",",databasefields) + ") VALUES(" + sValues + "); " + "SELECT CAST(SCOPE_IDENTITY() as " + sIdFieldType + ")";
-
-            //sb.AppendLine(@"            var sqlQuery = ""INSERT INTO " + sTableName + " (FirstName, LastName, Email) VALUES(@FirstName, @LastName, @Email); ""SELECT CAST(SCOPE_IDENTITY() as " + sIdFieldType + ")"";");
-            sb.AppendLine(@"            var userId = this._db.Query<" + sIdFieldType + ">(sqlQuery, user).Single();");
+            sb.AppendLine(string.Format(@"            var {1}Id = this._db.Query<{0}>(sqlQuery, {1}).Single();", sIdFieldType, sTableNameSingular, sIDField));
             sb.AppendLine(@"            user.UserID = userId;");
             sb.AppendLine(@"            return user;");
             sb.AppendLine(@"        }");
@@ -126,12 +125,8 @@ namespace MVC_Model_Generator
             {
                 sb.AppendLine("                " + databasefield + "= @" + databasefield);
             }
-
-            sb.AppendLine(@"                ""   FirstName = @FirstName, "" +");
-            sb.AppendLine(@"                ""    LastName  = @LastName, "" +");
-            sb.AppendLine(@"                ""    Email     = @Email "" +");
-            sb.AppendLine(@"                ""WHERE UserID = @UserID"";");
-            sb.AppendLine(@"            this._db.Execute(sqlQuery, user);");
+            sb.AppendLine(string.Format("                WHERE {0} = @{0};\";",sIDField));
+            sb.AppendLine(string.Format(@"            this._db.Execute(sqlQuery, {0});",sTableNameSingular));
             sb.AppendLine(@"            return user;");
             sb.AppendLine(@"        }");
             sb.AppendLine(@"");
@@ -140,9 +135,9 @@ namespace MVC_Model_Generator
             sb.AppendLine(@"            throw new NotImplementedException();");
             sb.AppendLine(@"        }");
             sb.AppendLine(@"");
-            sb.AppendLine(@"        public User GetUserInformatiom(" + sIdFieldType + "id)");
+            sb.AppendLine(string.Format(@"        public User Get{0}Informatiom(" + sIdFieldType + "id)",sTableNameSingular));
             sb.AppendLine(@"        {");
-            sb.AppendLine(@"            using (var multipleResults = this._db.QueryMultiple(""GetUserByID"", new { Id = id }, commandType: CommandType.StoredProcedure))");
+            sb.AppendLine(string.Format("            using (var multipleResults = this._db.QueryMultiple(\"Get{0}ByID\", new {{ {1} = id }}, commandType: CommandType.StoredProcedure))",sTableNameSingular,sIDField));
             sb.AppendLine(@"            {");
             sb.AppendLine(@"                var user = multipleResults.Read<User>().SingleOrDefault();");
             sb.AppendLine(@"");

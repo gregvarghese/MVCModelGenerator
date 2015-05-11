@@ -34,9 +34,19 @@
             this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.cboTableName = new System.Windows.Forms.ComboBox();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.txtModel = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtNamespace = new System.Windows.Forms.TextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tbModel = new System.Windows.Forms.TabPage();
+            this.tbInterface = new System.Windows.Forms.TabPage();
+            this.txtModel = new System.Windows.Forms.TextBox();
+            this.tbCode = new System.Windows.Forms.TabPage();
+            this.txtInterface = new System.Windows.Forms.TextBox();
+            this.txtCode = new System.Windows.Forms.TextBox();
+            this.tabControl1.SuspendLayout();
+            this.tbModel.SuspendLayout();
+            this.tbInterface.SuspendLayout();
+            this.tbCode.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -50,6 +60,7 @@
             // 
             // btnGenerateClass
             // 
+            this.btnGenerateClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGenerateClass.AutoSize = true;
             this.btnGenerateClass.Enabled = false;
             this.btnGenerateClass.Location = new System.Drawing.Point(542, 38);
@@ -71,6 +82,8 @@
             // 
             // txtConnectionString
             // 
+            this.txtConnectionString.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConnectionString.Location = new System.Drawing.Point(113, 12);
             this.txtConnectionString.Name = "txtConnectionString";
             this.txtConnectionString.Size = new System.Drawing.Size(421, 22);
@@ -88,6 +101,7 @@
             // 
             // btnConnect
             // 
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConnect.AutoSize = true;
             this.btnConnect.Location = new System.Drawing.Point(542, 10);
             this.btnConnect.Name = "btnConnect";
@@ -96,15 +110,6 @@
             this.btnConnect.Text = "&Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // txtModel
-            // 
-            this.txtModel.Location = new System.Drawing.Point(16, 68);
-            this.txtModel.Multiline = true;
-            this.txtModel.Name = "txtModel";
-            this.txtModel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtModel.Size = new System.Drawing.Size(619, 182);
-            this.txtModel.TabIndex = 7;
             // 
             // label3
             // 
@@ -117,19 +122,97 @@
             // 
             // txtNamespace
             // 
+            this.txtNamespace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNamespace.Location = new System.Drawing.Point(313, 41);
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(221, 22);
             this.txtNamespace.TabIndex = 8;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tbModel);
+            this.tabControl1.Controls.Add(this.tbInterface);
+            this.tabControl1.Controls.Add(this.tbCode);
+            this.tabControl1.Location = new System.Drawing.Point(13, 68);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(628, 182);
+            this.tabControl1.TabIndex = 10;
+            // 
+            // tbModel
+            // 
+            this.tbModel.Controls.Add(this.txtModel);
+            this.tbModel.Location = new System.Drawing.Point(4, 22);
+            this.tbModel.Name = "tbModel";
+            this.tbModel.Padding = new System.Windows.Forms.Padding(5);
+            this.tbModel.Size = new System.Drawing.Size(620, 156);
+            this.tbModel.TabIndex = 0;
+            this.tbModel.Text = "Model";
+            this.tbModel.UseVisualStyleBackColor = true;
+            // 
+            // tbInterface
+            // 
+            this.tbInterface.Controls.Add(this.txtInterface);
+            this.tbInterface.Location = new System.Drawing.Point(4, 22);
+            this.tbInterface.Name = "tbInterface";
+            this.tbInterface.Padding = new System.Windows.Forms.Padding(3);
+            this.tbInterface.Size = new System.Drawing.Size(620, 156);
+            this.tbInterface.TabIndex = 1;
+            this.tbInterface.Text = "Interface";
+            this.tbInterface.UseVisualStyleBackColor = true;
+            // 
+            // txtModel
+            // 
+            this.txtModel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModel.Location = new System.Drawing.Point(5, 5);
+            this.txtModel.Multiline = true;
+            this.txtModel.Name = "txtModel";
+            this.txtModel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtModel.Size = new System.Drawing.Size(610, 146);
+            this.txtModel.TabIndex = 8;
+            // 
+            // tbCode
+            // 
+            this.tbCode.Controls.Add(this.txtCode);
+            this.tbCode.Location = new System.Drawing.Point(4, 22);
+            this.tbCode.Name = "tbCode";
+            this.tbCode.Size = new System.Drawing.Size(620, 156);
+            this.tbCode.TabIndex = 2;
+            this.tbCode.Text = "Code";
+            this.tbCode.UseVisualStyleBackColor = true;
+            // 
+            // txtInterface
+            // 
+            this.txtInterface.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtInterface.Location = new System.Drawing.Point(3, 3);
+            this.txtInterface.Multiline = true;
+            this.txtInterface.Name = "txtInterface";
+            this.txtInterface.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInterface.Size = new System.Drawing.Size(614, 150);
+            this.txtInterface.TabIndex = 8;
+            // 
+            // txtCode
+            // 
+            this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCode.Location = new System.Drawing.Point(0, 0);
+            this.txtCode.Multiline = true;
+            this.txtCode.Name = "txtCode";
+            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCode.Size = new System.Drawing.Size(620, 156);
+            this.txtCode.TabIndex = 9;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 262);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtNamespace);
-            this.Controls.Add(this.txtModel);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cboTableName);
             this.Controls.Add(this.label2);
@@ -140,6 +223,13 @@
             this.Name = "frmMain";
             this.Text = "MVC Model Generator";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabControl1.ResumeLayout(false);
+            this.tbModel.ResumeLayout(false);
+            this.tbModel.PerformLayout();
+            this.tbInterface.ResumeLayout(false);
+            this.tbInterface.PerformLayout();
+            this.tbCode.ResumeLayout(false);
+            this.tbCode.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,9 +243,15 @@
         private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.ComboBox cboTableName;
         private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.TextBox txtModel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtNamespace;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tbModel;
+        private System.Windows.Forms.TextBox txtModel;
+        private System.Windows.Forms.TabPage tbInterface;
+        private System.Windows.Forms.TabPage tbCode;
+        private System.Windows.Forms.TextBox txtInterface;
+        private System.Windows.Forms.TextBox txtCode;
     }
 }
 

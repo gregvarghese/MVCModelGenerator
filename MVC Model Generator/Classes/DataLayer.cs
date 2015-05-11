@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -139,9 +140,32 @@ namespace MVC_Model_Generator
 
         public SqlDataReader GetDataReader(string sSQL)
         {
+            OpenConnection();
             var sc = new SqlCommand(sSQL, sqlCon);
             return sc.ExecuteReader();
         }
+
+        public string GetPrimaryKey(string tableName)
+        {
+            OpenConnection();
+            string names,
+            ID = "";
+            // sp_pkeys is SQL Server default stored procedure. Pass the table name and it returns the primary key column
+            using (var sc = new SqlCommand("sp_pkeys", sqlCon))
+            {
+                sc.CommandType = CommandType.StoredProcedure;
+                sc.Parameters.Add("@table_name", SqlDbType.NVarChar).Value = tableName;
+                var mReader = sc.ExecuteReader();
+                while (mReader.Read())
+                {
+                    //the primary key column resides at index 4 
+                    ID = mReader[3].ToString();
+                }
+            }
+            CloseConnection();
+            return ID;
+        }
+
 
         public List<string> GetTables()
         {
@@ -151,8 +175,10 @@ namespace MVC_Model_Generator
                 var schema = connection.GetSchema("Tables");
                 var list = (from DataRow row in schema.Rows select row[2].ToString()).ToList();
                 list.Sort();
+                connection.Close();
                 return list;
             }
         }
+
     }
 }
