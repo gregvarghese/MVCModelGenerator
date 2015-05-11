@@ -28,6 +28,7 @@ In Progress
  Some features are a work in progress and not finalized. I'll update this readme file as features are updated or modified. Things currently in progress which should be updated shortly:
  - User Interface to be improved as features are added.
  - Dapper CRUD functionality generation is still being developed. Basic code is now available through generated business layer.
+ - 
 
 ----------
 
@@ -60,3 +61,6 @@ In no particular order:
  - Generate Web API code
  - Add Support for stored procedures
  - Allow generation of multiple models simultaneously
+
+
+
